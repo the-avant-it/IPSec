@@ -1,4 +1,5 @@
 galaxy_info:
+  #!!! Поправить
   author: Radmir Gataullin
   description: Role for installing Ansible controller. Needed by daemonized ansible scripts
   company: Radmir Gataullin

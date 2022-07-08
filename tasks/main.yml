@@ -1,20 +1,25 @@
 ---
+#!!! Поставить время жизни кеша. См коммон роль
 - name: Update pkgs cache
   apt:
     update_cache: yes
 
+#!!! Зафиксировать версию
 - name: Install strongswan
   apt:
     name: strongswan
 
+#!!! Так делать не нужно, у ансибла есть модуль для этого
 - name: copy sysconfig
   template:
     src: sysctl.conf.j2
     dest:  /etc/sysctl.d/ipsec.conf
 
+#!!! Аналогично
 - name: apply sys config
   shell: sysctl --system
 
+#!!! Все неймы с большой буквы
 - name: copy ipsec client conf
   template:
     src: ipsec-client.conf.j2
@@ -32,12 +37,15 @@
     src: ipsec-secret.j2
     dest: /etc/ipsec.secrets
 
+#!!! Рестарт без необходимости, используй нотифай, даунтайм же каждый раз!
 - name: restart strongswan daemon
   service:
     name: strongswan-starter
     state: restarted
 
+#!!! Тоже через нотиффай скорее всего надо. 
+#!!! За место shell рекомендовано использовать command
+#!!! Постарайся использовать changed_when чтобы таска всегда не была помечена как изменившаяся
 - name: Run ipsec connect with server
   shell: ipsec up l2tpvpn
   delegate_to: ipsec-client
-
