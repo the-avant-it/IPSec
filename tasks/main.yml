@@ -29,7 +29,7 @@
   template:
     src: ipsec-server.conf.j2
     dest: /etc/ipsec.conf
-  delegate_to: ipsec_server
+  delegate_to: ipsec-server
   notify: Restart strongswan
   register: ipsec_conf
   
