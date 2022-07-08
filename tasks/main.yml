@@ -23,7 +23,7 @@
     dest: /etc/ipsec.conf
   delegate_to: ipsec-client
   notify: restart strongswan
-  register: ipsec-conf
+  register: ipsec_conf
 
 - name: Copy ipsec server conf
   template:
@@ -31,7 +31,7 @@
     dest: /etc/ipsec.conf
   delegate_to: ipsec_server
   notify: Restart strongswan
-  register: ipsec-conf
+  register: ipsec_conf
   
 - name: Copy ipsec secret key
   template:
@@ -43,4 +43,4 @@
 - name: Run ipsec connect with server
   command: ipsec up l2tpvpn
   delegate_to: ipsec-client
-  when: ipsec-conf.changed
+  when: ipsec_conf.changed
