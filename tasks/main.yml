@@ -22,7 +22,7 @@
     src: ipsec-client.conf.j2
     dest: /etc/ipsec.conf
   delegate_to: ipsec-client
-  notify: restart strongswan
+  notify: Restart strongswan
   register: ipsec_conf
 
 - name: Copy ipsec server conf
@@ -37,7 +37,7 @@
   template:
     src: ipsec-secret.j2
     dest: /etc/ipsec.secrets
-  notify: restart strongswan
+  notify: Restart strongswan
   register: ipsec_conf
 
 - name: Run ipsec connect with server
