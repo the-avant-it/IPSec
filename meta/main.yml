@@ -1,7 +1,6 @@
 galaxy_info:
-  #!!! Поправить
-  author: Radmir Gataullin
-  description: Role for installing Ansible controller. Needed by daemonized ansible scripts
+  author: Vasil Medvedev
+  description: Role for installing IPSec
   company: Radmir Gataullin
 
   # If the issue tracker for your role is not on github, uncomment the

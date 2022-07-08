@@ -15,7 +15,7 @@
     sysctl_set: yes
     state: present
     reload: yes
-  with_dict: '{{ ipsec.sysctl_config }}'
+  with_dict: '{{ sysctl_config }}'
 
 - name: Copy ipsec client conf
   template:
@@ -27,12 +27,10 @@
 
 - name: Copy ipsec server conf
   template:
-    #!!! Через нижнее подчеркивание)
     src: ipsec-server.conf.j2
     dest: /etc/ipsec.conf
-  delegate_to: ipsec-server
-  #!!! С большой буквы
-  notify: restart strongswan
+  delegate_to: ipsec_server
+  notify: Restart strongswan
   register: ipsec-conf
   
 - name: Copy ipsec secret key
@@ -40,8 +38,7 @@
     src: ipsec-secret.j2
     dest: /etc/ipsec.secrets
   notify: restart strongswan
-  #!!! Через нижнее подчеркивание
-  register: ipsec-conf
+  register: ipsec_conf
 
 - name: Run ipsec connect with server
   command: ipsec up l2tpvpn
