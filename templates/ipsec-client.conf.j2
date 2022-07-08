@@ -1,0 +1,12 @@
+conn l2tpvpn
+        keyexchange=ikev2
+        type=tunnel
+        authby=secret
+        pfs=no
+        rekey=no
+        keyingtries=2
+        left=%any
+        right="{{ ipsec.client.right }}"
+        rightsubnet="{{ ipsec.client.rightsubnet }}"
+        leftsubnet="{{ ipsec.client.leftsubnet }}"
+        auto=add
