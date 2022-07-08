@@ -1,51 +1,46 @@
 ---
-#!!! Поставить время жизни кеша. См коммон роль
 - name: Update pkgs cache
   apt:
     update_cache: yes
+    cache_valid_time: 86400 
 
-#!!! Зафиксировать версию
 - name: Install strongswan
   apt:
-    name: strongswan
+    name: strongswan=5.8.2-1ubuntu3.4
 
-#!!! Так делать не нужно, у ансибла есть модуль для этого
-- name: copy sysconfig
-  template:
-    src: sysctl.conf.j2
-    dest:  /etc/sysctl.d/ipsec.conf
+- name: Set sysctl config
+  sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+  with_dict: '{{ ipsec.sysctl_config }}'
 
-#!!! Аналогично
-- name: apply sys config
-  shell: sysctl --system
-
-#!!! Все неймы с большой буквы
-- name: copy ipsec client conf
+- name: Copy ipsec client conf
   template:
     src: ipsec-client.conf.j2
     dest: /etc/ipsec.conf
   delegate_to: ipsec-client
+  notify: restart strongswan
+  register: ipsec-conf
 
-- name: copy ipsec server conf
+- name: Copy ipsec server conf
   template:
     src: ipsec-server.conf.j2
     dest: /etc/ipsec.conf
   delegate_to: ipsec-server
-
-- name: copy ipsec secret key
+  notify: restart strongswan
+  register: ipsec-conf
+  
+- name: Copy ipsec secret key
   template:
     src: ipsec-secret.j2
     dest: /etc/ipsec.secrets
+  notify: restart strongswan
+  register: ipsec-conf
 
-#!!! Рестарт без необходимости, используй нотифай, даунтайм же каждый раз!
-- name: restart strongswan daemon
-  service:
-    name: strongswan-starter
-    state: restarted
-
-#!!! Тоже через нотиффай скорее всего надо. 
-#!!! За место shell рекомендовано использовать command
-#!!! Постарайся использовать changed_when чтобы таска всегда не была помечена как изменившаяся
 - name: Run ipsec connect with server
-  shell: ipsec up l2tpvpn
+  command: ipsec up l2tpvpn
   delegate_to: ipsec-client
+  when: ipsec-conf.changed
