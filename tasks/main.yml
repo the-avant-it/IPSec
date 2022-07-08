@@ -27,9 +27,11 @@
 
 - name: Copy ipsec server conf
   template:
+    #!!! Через нижнее подчеркивание)
     src: ipsec-server.conf.j2
     dest: /etc/ipsec.conf
   delegate_to: ipsec-server
+  #!!! С большой буквы
   notify: restart strongswan
   register: ipsec-conf
   
@@ -38,6 +40,7 @@
     src: ipsec-secret.j2
     dest: /etc/ipsec.secrets
   notify: restart strongswan
+  #!!! Через нижнее подчеркивание
   register: ipsec-conf
 
 - name: Run ipsec connect with server
