@@ -17,12 +17,12 @@
     reload: yes
   with_dict: '{{ sysctl_config | items2dict }}'
 
-# - name: Copy ipsec client conf
-#   template:
-#     src: ipsec-client.conf.j2
-#     dest: /etc/ipsec.conf
-#   delegate_to: ipsec-client
-#   notify: Restart strongswan
+- name: Copy ipsec client conf
+  template:
+    src: ipsec-client.conf.j2
+    dest: /etc/ipsec.conf
+  delegate_to: ipsec-client
+  notify: Restart strongswan
 
 - name: Copy ipsec server conf
   template:
