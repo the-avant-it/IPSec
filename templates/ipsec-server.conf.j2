@@ -1,4 +1,5 @@
-conn l2tpvpn
+{% for server in {{ ipsec.server}} %}
+conn ipsec-{{ server.key }}
         keyexchange=ikev2
         type=tunnel
         authby=secret
@@ -6,7 +7,8 @@ conn l2tpvpn
         keyingtries=2
         left=%any
         right=%any
-        leftsubnet="{{ ipsec.server.leftsubnet }}"
-        rightsubnet="{{ ipsec.server.rightsubnet }}"
+        leftsubnet="{{ server.leftsubnet }}"
+        rightsubnet="{{ server.rightsubnet }}"
         auto=add
         fragmentation=yes
+{% endfor %}

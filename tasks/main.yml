@@ -31,8 +31,16 @@
   delegate_to: ipsec-server
   notify: Restart strongswan
   
-- name: Copy ipsec secret key
+- name: Copy ipsec clients secret key
   template:
-    src: ipsec-secret.j2
+    src: ipsec-secret-clients.j2
     dest: /etc/ipsec.secrets
   notify: Restart strongswan
+  delegate_to: ipsec-client
+
+- name: Copy ipsec server secret key
+  template:
+    src: ipsec-secret-servers.j2
+    dest: /etc/ipsec.secrets
+  notify: Restart strongswan
+  delegate_to: ipsec-server
