@@ -1,14 +1,14 @@
 {% for client in ipsec.client %}
-conn ipsec-{{ client['name'] }}
+conn ipsec-{{ client }}
         keyexchange=ikev2
         type=tunnel
         authby=secret
         rekey=no
         keyingtries=2
         left=%any
-        right="{{ client['right'] }}"
-        rightsubnet="{{ client['rightsubnet'] }}"
-        leftsubnet="{{ client['leftsubnet'] }}"
+        right="{{ ipsec.client[client].right }}"
+        rightsubnet="{{ ipsec.client[client].rightsubnet }}"
+        leftsubnet="{{ ipsec.client[client].leftsubnet }}"
         auto=route
         fragmentation=yes
 {% endfor %}
