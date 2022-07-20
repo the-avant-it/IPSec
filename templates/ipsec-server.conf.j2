@@ -1,5 +1,5 @@
 {% for server in {{ ipsec.server}} %}
-conn ipsec-{{ server.key }}
+conn ipsec-"{{ server.key }}"
         keyexchange=ikev2
         type=tunnel
         authby=secret
