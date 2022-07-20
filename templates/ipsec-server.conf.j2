@@ -1,5 +1,5 @@
 {% for server in ipsec.server %}
-conn ipsec-"{{ server }}"
+conn ipsec-{{ server['name'] }}
         keyexchange=ikev2
         type=tunnel
         authby=secret
@@ -7,8 +7,8 @@ conn ipsec-"{{ server }}"
         keyingtries=2
         left=%any
         right=%any
-        leftsubnet="{{ server.leftsubnet }}"
-        rightsubnet="{{ server.rightsubnet }}"
+        leftsubnet="{{ server['leftsubnet'] }}"
+        rightsubnet="{{ server['rightsubnet'] }}"
         auto=add
         fragmentation=yes
 {% endfor %}
