@@ -11,4 +11,6 @@ conn ipsec-{{ client }}
         leftsubnet="{{ ipsec.client[client].leftsubnet }}"
         auto=route
         fragmentation=yes
+        reauth=no
+        dpdaction=clear
 {% endfor %}

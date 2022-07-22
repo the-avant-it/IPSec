@@ -11,4 +11,6 @@ conn ipsec-{{ server }}
         rightsubnet="{{ ipsec.server[server].rightsubnet }}"
         auto=add
         fragmentation=yes
+        reauth=no
+        dpdaction=clear
 {% endfor %}
