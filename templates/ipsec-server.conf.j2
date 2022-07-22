@@ -3,8 +3,8 @@ conn ipsec-{{ server }}
         keyexchange=ikev2
         type=tunnel
         authby=secret
-        rekey=no
-        keyingtries=2
+        rekey=yes
+        keyingtries=3
         left=%any
         right=%any
         leftsubnet="{{ ipsec.server[server].leftsubnet }}"
