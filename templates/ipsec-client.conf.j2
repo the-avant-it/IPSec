@@ -13,4 +13,5 @@ conn ipsec-{{ client }}
         fragmentation=yes
         reauth=no
         dpdaction=clear
+        esp=aes256-sha256-modp2048
 {% endfor %}
