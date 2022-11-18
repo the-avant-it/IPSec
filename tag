@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "Script version: 2.0.2:3"
+echo "Script version: 2.0.4:5"
 # Based on https://gist.github.com/dtiemann83/cfa16ade69a3ea451ad760d4118a9351
 
-CURTAG=`git describe --abbrev=0 --tags`;
+CURTAG=$(git describe --tags `git rev-list --tags --max-count=1` | grep -Eo "[0-9]+\.[0-9]+\.[0-9]+");
 CURTAG="${CURTAG/v/}"
 
 IFS='.' read -a vers <<< "$CURTAG"
