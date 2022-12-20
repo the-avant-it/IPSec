@@ -6,7 +6,7 @@
 
 - name: Install strongswan
   apt:
-    name: strongswan=5.8.2-1ubuntu3.4
+    name: strongswan=5.8.2-1ubuntu3.5
 
 - name: Set sysctl config
   sysctl:
