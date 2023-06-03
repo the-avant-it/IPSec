@@ -21,6 +21,7 @@
   template:
     src: ipsec-client.conf.j2
     dest: /etc/ipsec.conf
+    mode: '0644'
   delegate_to: ipsec-client
   delegate_facts: True
   notify: Restart strongswan
@@ -29,6 +30,7 @@
   template:
     src: ipsec-server.conf.j2
     dest: /etc/ipsec.conf
+    mode: '0644'
   delegate_to: ipsec-server
   delegate_facts: True
   notify: Restart strongswan
@@ -37,6 +39,7 @@
   template:
     src: ipsec-secret-clients.j2
     dest: /etc/ipsec.secrets
+    mode: '0644'
   notify: Restart strongswan
   delegate_to: ipsec-client
   delegate_facts: True
@@ -45,6 +48,7 @@
   template:
     src: ipsec-secret-servers.j2
     dest: /etc/ipsec.secrets
+    mode: '0644'
   notify: Restart strongswan
   delegate_to: ipsec-server
   delegate_facts: True
