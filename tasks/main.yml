@@ -43,7 +43,7 @@
     sysctl_set: yes
     state: present
     reload: yes
-  with_dict: '{{ sysctl_config | items2dict }}'
+  with_dict: '{{ ipsec.sysctl_config | items2dict }}'
 
 - name: Copy ipsec client conf
   template:
