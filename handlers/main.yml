@@ -2,3 +2,11 @@
   service:
     name: strongswan-starter
     state: restarted
+
+- name: Restart ipsec
+  command: ipsec restart
+
+- name: Up clients
+  command: ipsec up ipsec-{{ item }}
+  delegate_to: ipsec-client  
+  loop: "{{ ipsec.client }}"

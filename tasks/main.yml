@@ -52,7 +52,10 @@
     mode: '0644'
   delegate_to: ipsec-client
   delegate_facts: True
-  notify: Restart strongswan
+  notify: 
+  - Restart strongswan
+  - Restart ipsec
+  - Up clients
 
 - name: Copy ipsec server conf
   template:
@@ -61,14 +64,20 @@
     mode: '0644'
   delegate_to: ipsec-server
   delegate_facts: True
-  notify: Restart strongswan
+  notify: 
+  - Restart strongswan
+  - Restart ipsec
+  - Up clients
   
 - name: Copy ipsec clients secret key
   template:
     src: ipsec-secret-clients.j2
     dest: /etc/ipsec.secrets
     mode: '0644'
-  notify: Restart strongswan
+  notify: 
+  - Restart strongswan
+  - Restart ipsec
+  - Up clients
   delegate_to: ipsec-client
   delegate_facts: True
 
@@ -77,6 +86,9 @@
     src: ipsec-secret-servers.j2
     dest: /etc/ipsec.secrets
     mode: '0644'
-  notify: Restart strongswan
+  notify: 
+  - Restart strongswan
+  - Restart ipsec
+  - Up clients
   delegate_to: ipsec-server
   delegate_facts: True

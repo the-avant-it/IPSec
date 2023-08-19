@@ -5,6 +5,10 @@ Needs access to 2 host in order to work (client and server)
 
 # Changelog
 
+## 3.0.2
+
+- Add ipsec restart and up
+
 ## 3.0.1
 
 - Fix critical bug
