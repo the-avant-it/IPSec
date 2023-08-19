@@ -5,6 +5,10 @@ Needs access to 2 host in order to work (client and server)
 
 # Changelog
 
+## 3.0.1
+
+- Fix critical bug
+
 ## 3.0.0
 
 - BREAKING CHANGE: Move sysctl_config in upsec block
@@ -22,7 +26,7 @@ Needs access to 2 host in order to work (client and server)
 
 - Stable
 
-# Documentation for 2.0.8
+# Documentation for 3.0.1
 
 ## Requirements
 
@@ -71,10 +75,11 @@ ipsec:
       right: 109.120.183.119 
   # Server side configuration
   server:
-    # Left means subnet the clients reside in
-    leftsubnet: 10.103.1.0/24,10.103.2.0/24,10.103.3.0/24,10.103.4.0/24
-    # Right means subnets the server located in
-    rightsubnet: 172.20.0.0/16
+    yandex:
+      # Left means subnet the clients reside in
+      leftsubnet: 10.103.1.0/24,10.103.2.0/24,10.103.3.0/24,10.103.4.0/24
+      # Right means subnets the server located in
+      rightsubnet: 172.20.0.0/16
 ```  
 
 ### Secret
