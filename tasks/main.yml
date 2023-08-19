@@ -4,6 +4,34 @@
     update_cache: yes
     cache_valid_time: 86400 
 
+- name: Install iptables-persistent
+  apt:
+    name: iptables-persistent=1.0.14ubuntu1
+    state: present
+
+- name: Clean nat POSTROUTING table 
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    flush: true
+  changed_when: false
+
+- name: Enable MASQUERADE
+  ansible.builtin.iptables:
+    table: nat
+    source: "{{ item }}"
+    jump: MASQUERADE
+    chain: POSTROUTING
+  changed_when: false
+  loop: 
+  - "10.0.0.0/8"
+  - "172.16.0.0/12"
+  - "192.168.0.0/16"
+
+- name: Save iptables
+  shell: iptables-save > /etc/iptables/rules.v4
+  changed_when: false
+
 - name: Install strongswan
   apt:
     name: strongswan=5.8.2-1ubuntu3.5

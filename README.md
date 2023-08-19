@@ -5,6 +5,10 @@ Needs access to 2 host in order to work (client and server)
 
 # Changelog
 
+## 2.1.0
+
+- Add MASQUERADE configuration
+
 ## 2.0.2
 
 - ????
