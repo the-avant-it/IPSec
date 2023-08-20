@@ -7,6 +7,6 @@
   command: ipsec restart
 
 - name: Up clients
-  command: ipsec up ipsec-{{ item }}
+  command: ipsec up ipsec-{{ item.key }}
   delegate_to: ipsec-client  
   loop: "{{ ipsec.client | dict2items }}"
