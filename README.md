@@ -8,6 +8,17 @@ Needs access to 2 host in order to work (client and server)
 - On VK Cloud you have to make additional configurations!
 - On AWS you habe to disable source/dest check on ipsec's network interface (it's already disabled if you are using our modules =)
 
+# Possible errors
+
+E1:
+
+received TS_UNACCEPTABLE notify, no CHILD_SA built
+failed to establish CHILD_SA, keeping IKE_SA
+
+S1: 
+
+You are likely misplaced right and left sides
+
 # Changelog
 
 ## 3.0.4
