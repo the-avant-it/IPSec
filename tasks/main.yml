@@ -55,7 +55,6 @@
   notify: 
   - Restart strongswan
   - Restart ipsec
-  - Up clients
 
 - name: Copy ipsec server conf
   template:
@@ -67,7 +66,6 @@
   notify: 
   - Restart strongswan
   - Restart ipsec
-  - Up clients
   
 - name: Copy ipsec clients secret key
   template:
@@ -77,7 +75,6 @@
   notify: 
   - Restart strongswan
   - Restart ipsec
-  - Up clients
   delegate_to: ipsec-client
   delegate_facts: True
 
@@ -89,6 +86,13 @@
   notify: 
   - Restart strongswan
   - Restart ipsec
-  - Up clients
   delegate_to: ipsec-server
   delegate_facts: True
+
+- name: Run handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Up clients
+  command: ipsec up ipsec-{{ item.key }}
+  delegate_to: ipsec-client  
+  loop: "{{ ipsec.client | dict2items }}"

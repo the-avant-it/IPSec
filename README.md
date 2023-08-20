@@ -10,6 +10,10 @@ Needs access to 2 host in order to work (client and server)
 
 # Changelog
 
+## 3.0.4
+
+- Always run up clients
+
 ## 3.0.3
 
 - Fix
