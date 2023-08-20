@@ -7,6 +7,7 @@ Needs access to 2 host in order to work (client and server)
 
 - On VK Cloud you have to make additional configurations!
 - On AWS you habe to disable source/dest check on ipsec's network interface (it's already disabled if you are using our modules =)
+- Sometimes you have to manually run `ipsec restart` on the server and `ipsec restart` followed by `ipsec up` on the client in order for changes to take effect
 
 # Possible errors
 
