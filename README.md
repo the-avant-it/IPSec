@@ -3,6 +3,11 @@
 Role for installing strongswan based ipsec
 Needs access to 2 host in order to work (client and server)
 
+# Known issues
+
+- On VK Cloud you have to make additional configurations!
+- On AWS you habe to disable source/dest check on ipsec's network interface (it's already disabled if you are using our modules =)
+
 # Changelog
 
 ## 3.0.2
@@ -30,7 +35,7 @@ Needs access to 2 host in order to work (client and server)
 
 - Stable
 
-# Documentation for 3.0.1
+# Documentation for 3.0.2
 
 ## Requirements
 
@@ -38,17 +43,17 @@ Needs access to 2 host in order to work (client and server)
 
 ```yaml
 ipsec:
-    hosts:
-        ipsec-server:
-            ansible_ssh_private_key_file: ./ssh/prod-ipsec-G43b8hsq.pem
-            ansible_user: ubuntu
-            ansible_host: ipsec-server-vk.hostname
-        ipsec-client:
-            ansible_ssh_private_key_file: ./ssh/prod-ipsec-ru-central1-a-ssh.secret.pem
-            ansible_user: ubuntu
-            ansible_host: ipsec-pub.hostname
-    vars:
-        hide_secrtets_from_log: yes 
+  hosts:
+    ipsec-client:
+      ansible_ssh_private_key_file: ./ssh/dev-ipsec-eu-central-1a-ssh.pem
+      ansible_user: ubuntu
+      ansible_host: dev-ipsec-pub.hostname
+    ipsec-server:
+      ansible_ssh_private_key_file: ./ssh/dev-gcp-ipsec-us-central1-a-ssh.pem
+      ansible_user: ubuntu
+      ansible_host: dev-gcp-ipsec-pub.hostname
+  vars:
+    hide_secrtets_from_log: yes 
 ```  
 
 ## Variables
@@ -57,33 +62,23 @@ ipsec:
 
 ```yaml
 ipsec:  
-  # Client side configuration
+  # Client side configuration (aws is the client in this example)
   client:
     # You may have any other number of clients and their names
-    vk:
-      # Left means subnet the client connects to
-      leftsubnet: 172.20.0.0/16
-      # Right means subnets the server located in
-      rightsubnet: 10.103.1.0/24,10.103.2.0/24,10.103.3.0/24,10.103.4.0/24
-      # ipsec server
-      right: ipsec-server-vk.hostname 
-    office:
-      leftsubnet: 172.20.0.0/16,172.18.0.0/16
-      rightsubnet: 10.255.0.0/16
-      # ipsec server
-      right: 95.214.119.30 
-    ldap:
-      leftsubnet: 172.20.0.0/16,172.18.0.0/16
-      rightsubnet: 10.0.1.0/24,10.101.0.10/32
-      # ipsec server
-      right: 109.120.183.119 
-  # Server side configuration
+    aws:
+      # Left means subnets the CLIENT is located in
+      leftsubnet: 172.18.60.0/23,172.18.62.0/23,172.18.64.0/23,172.18.66.0/23,172.18.68.0/23,172.18.70.0/23
+      # Right means subnets the SERVER is located in
+      rightsubnet: 172.22.84.0/23,172.22.86.0/23,172.22.88.0/23,172.22.90.0/23,172.22.92.0/23,172.22.94.0/23
+      right: dev-gcp-ipsec-pub.hostname
+
+  # Server side configuration (google is the server in this example)
   server:
-    yandex:
-      # Left means subnet the clients reside in
-      leftsubnet: 10.103.1.0/24,10.103.2.0/24,10.103.3.0/24,10.103.4.0/24
-      # Right means subnets the server located in
-      rightsubnet: 172.20.0.0/16
+    gcp:
+      # Left means subnets the SERVER is located in (see, server configuration is opposite to the client's one!)
+      leftsubnet: 172.22.84.0/23,172.22.86.0/23,172.22.88.0/23,172.22.90.0/23,172.22.92.0/23,172.22.94.0/23
+      # Right means subnets the CLIENT is located in (see, server configuration is opposite to the client's one!)
+      rightsubnet: 172.18.60.0/23,172.18.62.0/23,172.18.64.0/23,172.18.66.0/23,172.18.68.0/23,172.18.70.0/23
 ```  
 
 ### Secret
