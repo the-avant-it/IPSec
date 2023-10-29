@@ -22,6 +22,10 @@ You are likely misplaced right and left sides
 
 # Changelog
 
+## 3.0.5
+
+- Add net.ipv6.conf.all.forwarding and net.ipv6.conf.all.accept_redirects to sysctl_config
+
 ## 3.0.4
 
 - Always run up clients
