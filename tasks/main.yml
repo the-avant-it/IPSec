@@ -99,4 +99,4 @@
 - name: Up clients
   some_module:
     parameter: value
-  changed_when: true  # Измените на true, если изменение должно произойти всегда
+#  changed_when: true  # Измените на true, если изменение должно произойти всегда
