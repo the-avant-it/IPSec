@@ -92,7 +92,11 @@
 - name: Run handlers
   ansible.builtin.meta: flush_handlers
 
+#- name: Up clients
+#  command: ipsec up ipsec-{{ item.key }}
+#  delegate_to: ipsec-client  
+#  loop: "{{ ipsec.client | dict2items }}"
 - name: Up clients
-  command: ipsec up ipsec-{{ item.key }}
-  delegate_to: ipsec-client  
-  loop: "{{ ipsec.client | dict2items }}"
+  some_module:
+    parameter: value
+  changed_when: false  # Измените на true, если изменение должно произойти всегда
