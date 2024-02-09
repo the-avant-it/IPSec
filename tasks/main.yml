@@ -1,5 +1,6 @@
 ---
-- block:
+- become: yes
+  block:
 
   - name: Update pkgs cache
     apt:
