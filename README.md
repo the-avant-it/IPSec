@@ -20,6 +20,19 @@ S1:
 
 You are likely misplaced right and left sides
 
+E2:
+
+When uou try to ping some resource in target network you get folowwing output:
+ping 10.8.0.29
+PING 10.8.0.29 (10.8.0.29): 56 data bytes
+92 bytes from 10.8.0.1: Redirect Host
+92 bytes from 10.8.0.1: Redirect Host
+92 bytes from 10.8.0.1: Redirect Host
+
+S2:
+
+It's likely problem with you VPN because it allocates subnet in 10.8 range for clients. Try to ping from vm in internal subnet and if the problem will not persist in that case, check your vpn (`route -4` command may help)
+
 # Debug advices
 
 1) Run `ping` to the resource you want to reach through tunnel (it sould be on the side where ipsec server is located)
@@ -57,7 +70,7 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 # Changelog
 
-## 3.1.2
+## 3.1.3
 
 - Add support for ubuntu 22.04 and debian 11
 
