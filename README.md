@@ -57,9 +57,9 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 # Changelog
 
-## 3.1.1
+## 3.1.2
 
-- Add support for ubuntu 22.04
+- Add support for ubuntu 22.04 and debian 11
 
 ## 3.0.5
 

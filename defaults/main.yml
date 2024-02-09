@@ -18,8 +18,9 @@ ipsec:
   iptables_persistent_package_version_os_defaults: 
     Ubuntu20.04: "1.0.14ubuntu1"
     Ubuntu22.04: "1.0.16"
+    Debian11: "1.0.15"
   strongswan_package_version: null
   strongswan_package_version_os_defaults: 
     Ubuntu20.04: "5.8.2-1ubuntu3.5"
     Ubuntu22.04: "5.9.5-2ubuntu2.2"
-    Ubuntu22.04: "5.9.5-2ubuntu2.2"
+    Debian11: "5.9.1-1+deb11u4"
