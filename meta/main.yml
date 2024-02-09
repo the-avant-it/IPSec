@@ -2,8 +2,8 @@ galaxy_info:
   author: Vasil Medvedev
   description: Role for installing IPSec
   company: Radmir Gataullin
-  # role_name: common_ipsec
-  role_name: my_name
+  role_name: common_ipsec
+
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
