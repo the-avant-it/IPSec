@@ -57,6 +57,10 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 # Changelog
 
+## 3.1.0
+
+- Add support for ubuntu 22.04
+
 ## 3.0.5
 
 - Add net.ipv6.conf.all.forwarding and net.ipv6.conf.all.accept_redirects to sysctl_config

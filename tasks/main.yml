@@ -4,9 +4,21 @@
     update_cache: yes
     cache_valid_time: 86400 
 
+- name: Set default value iptables_persistent_package_version if not specified
+  set_fact:
+    ipsec:
+      iptables_persistent_package_version: "{{ ipsec.iptables_persistent_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
+  when: ipsec.iptables_persistent_package_version == None
+
+- name: Set default value strongswan_package_version if not specified
+  set_fact:
+    ipsec:
+      strongswan_package_version: "{{ ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
+  when: ipsec.strongswan_package_version == None
+
 - name: Install iptables-persistent
   apt:
-    name: iptables-persistent=1.0.14ubuntu1
+    name: iptables-persistent={{ ipsec.iptables_persistent_package_version }}
     state: present
 
 - name: Clean nat POSTROUTING table 
@@ -34,7 +46,7 @@
 
 - name: Install strongswan
   apt:
-    name: strongswan=5.8.2-1ubuntu3.5
+    name: strongswan={{ ipsec.strongswan_package_version }}
 
 - name: Set sysctl config
   sysctl:
