@@ -11,10 +11,10 @@
     set_fact:
       ipsec: "{{ ipsec | 
           combine(
-            {'strongswan_package_version_os_defaults': ipsec.strongswan_package_version_os_defaults_os_defaults[ansible_distribution + ansible_distribution_version]}
+            {'strongswan_package_version': ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version]}
           ) 
         }}"
-    when: ipsec.strongswan_package_version_os_defaults == None
+    when: ipsec.strongswan_package_version == None
 
   - name: Set default value iptables_persistent_package_version if not specified
     set_fact:
