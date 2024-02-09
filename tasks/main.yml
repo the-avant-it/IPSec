@@ -7,17 +7,19 @@
       update_cache: yes
       cache_valid_time: 86400 
 
+  - name: Set default value strongswan_package_version if not specified
+    set_fact:
+      ipsec:
+        strongswan_package_version: "{{ ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
+    when: ipsec.strongswan_package_version == None
+
+
   - name: Set default value iptables_persistent_package_version if not specified
     set_fact:
       ipsec:
         iptables_persistent_package_version: "{{ ipsec.iptables_persistent_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
     when: ipsec.iptables_persistent_package_version == None
 
-  - name: Set default value strongswan_package_version if not specified
-    set_fact:
-      ipsec:
-        strongswan_package_version: "{{ ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
-    when: ipsec.strongswan_package_version == None
 
   - name: Install iptables-persistent
     apt:
