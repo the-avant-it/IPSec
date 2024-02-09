@@ -10,10 +10,24 @@
       iptables_persistent_package_version: "{{ ipsec.iptables_persistent_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
   when: ipsec.iptables_persistent_package_version == None
 
+- name: Fail if iptables_persistent_package_version absent
+  fail: 
+    msg: >- 
+      ipsec.iptables_persistent_package_version was not specified and we could not find defaults for 
+      ansible_distribution = {{ ansible_distribution }} and ansible_distribution_version = {{ ansible_distribution_version }}
+  when: ipsec.iptables_persistent_package_version == None
+
 - name: Set default value strongswan_package_version if not specified
   set_fact:
     ipsec:
       strongswan_package_version: "{{ ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
+  when: ipsec.strongswan_package_version == None
+
+- name: Fail if strongswan_package_version absent
+  fail: 
+    msg: >- 
+      ipsec.strongswan_package_version was not specified and we could not find defaults for 
+      ansible_distribution = {{ ansible_distribution }} and ansible_distribution_version = {{ ansible_distribution_version }}
   when: ipsec.strongswan_package_version == None
 
 - name: Install iptables-persistent

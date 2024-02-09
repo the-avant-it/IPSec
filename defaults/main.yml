@@ -22,3 +22,4 @@ ipsec:
   strongswan_package_version_os_defaults: 
     Ubuntu20.04: "5.8.2-1ubuntu3.5"
     Ubuntu22.04: "5.9.5-2ubuntu2.2"
+    Ubuntu22.04: "5.9.5-2ubuntu2.2"
