@@ -1,110 +1,112 @@
 ---
-- name: Update pkgs cache
-  apt:
-    update_cache: yes
-    cache_valid_time: 86400 
+- block:
 
-- name: Set default value iptables_persistent_package_version if not specified
-  set_fact:
-    ipsec:
-      iptables_persistent_package_version: "{{ ipsec.iptables_persistent_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
-  when: ipsec.iptables_persistent_package_version == None
+  - name: Update pkgs cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 86400 
 
-- name: Set default value strongswan_package_version if not specified
-  set_fact:
-    ipsec:
-      strongswan_package_version: "{{ ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
-  when: ipsec.strongswan_package_version == None
+  - name: Set default value iptables_persistent_package_version if not specified
+    set_fact:
+      ipsec:
+        iptables_persistent_package_version: "{{ ipsec.iptables_persistent_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
+    when: ipsec.iptables_persistent_package_version == None
 
-- name: Install iptables-persistent
-  apt:
-    name: iptables-persistent={{ ipsec.iptables_persistent_package_version }}
-    state: present
+  - name: Set default value strongswan_package_version if not specified
+    set_fact:
+      ipsec:
+        strongswan_package_version: "{{ ipsec.strongswan_package_version_os_defaults[ansible_distribution + ansible_distribution_version] }}"
+    when: ipsec.strongswan_package_version == None
 
-- name: Clean nat POSTROUTING table 
-  ansible.builtin.iptables:
-    table: nat
-    chain: POSTROUTING
-    flush: true
-  changed_when: false
+  - name: Install iptables-persistent
+    apt:
+      name: iptables-persistent={{ ipsec.iptables_persistent_package_version }}
+      state: present
 
-- name: Enable MASQUERADE
-  ansible.builtin.iptables:
-    table: nat
-    source: "{{ item }}"
-    jump: MASQUERADE
-    chain: POSTROUTING
-  changed_when: false
-  loop: 
-  - "10.0.0.0/8"
-  - "172.16.0.0/12"
-  - "192.168.0.0/16"
+  - name: Clean nat POSTROUTING table 
+    ansible.builtin.iptables:
+      table: nat
+      chain: POSTROUTING
+      flush: true
+    changed_when: false
 
-- name: Save iptables
-  shell: iptables-save > /etc/iptables/rules.v4
-  changed_when: false
+  - name: Enable MASQUERADE
+    ansible.builtin.iptables:
+      table: nat
+      source: "{{ item }}"
+      jump: MASQUERADE
+      chain: POSTROUTING
+    changed_when: false
+    loop: 
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
 
-- name: Install strongswan
-  apt:
-    name: strongswan={{ ipsec.strongswan_package_version }}
+  - name: Save iptables
+    shell: iptables-save > /etc/iptables/rules.v4
+    changed_when: false
 
-- name: Set sysctl config
-  sysctl:
-    name: '{{ item.key }}'
-    value: '{{ item.value }}'
-    sysctl_set: yes
-    state: present
-    reload: yes
-  with_dict: '{{ ipsec.sysctl_config | items2dict }}'
+  - name: Install strongswan
+    apt:
+      name: strongswan={{ ipsec.strongswan_package_version }}
 
-- name: Copy ipsec client conf
-  template:
-    src: ipsec-client.conf.j2
-    dest: /etc/ipsec.conf
-    mode: '0644'
-  delegate_to: ipsec-client
-  delegate_facts: True
-  notify: 
-  - Restart strongswan
-  - Restart ipsec
+  - name: Set sysctl config
+    sysctl:
+      name: '{{ item.key }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+    with_dict: '{{ ipsec.sysctl_config | items2dict }}'
 
-- name: Copy ipsec server conf
-  template:
-    src: ipsec-server.conf.j2
-    dest: /etc/ipsec.conf
-    mode: '0644'
-  delegate_to: ipsec-server
-  delegate_facts: True
-  notify: 
-  - Restart strongswan
-  - Restart ipsec
-  
-- name: Copy ipsec clients secret key
-  template:
-    src: ipsec-secret-clients.j2
-    dest: /etc/ipsec.secrets
-    mode: '0644'
-  notify: 
-  - Restart strongswan
-  - Restart ipsec
-  delegate_to: ipsec-client
-  delegate_facts: True
+  - name: Copy ipsec client conf
+    template:
+      src: ipsec-client.conf.j2
+      dest: /etc/ipsec.conf
+      mode: '0644'
+    delegate_to: ipsec-client
+    delegate_facts: True
+    notify: 
+    - Restart strongswan
+    - Restart ipsec
 
-- name: Copy ipsec server secret key
-  template:
-    src: ipsec-secret-servers.j2
-    dest: /etc/ipsec.secrets
-    mode: '0644'
-  notify: 
-  - Restart strongswan
-  - Restart ipsec
-  delegate_to: ipsec-server
-  delegate_facts: True
+  - name: Copy ipsec server conf
+    template:
+      src: ipsec-server.conf.j2
+      dest: /etc/ipsec.conf
+      mode: '0644'
+    delegate_to: ipsec-server
+    delegate_facts: True
+    notify: 
+    - Restart strongswan
+    - Restart ipsec
+    
+  - name: Copy ipsec clients secret key
+    template:
+      src: ipsec-secret-clients.j2
+      dest: /etc/ipsec.secrets
+      mode: '0644'
+    notify: 
+    - Restart strongswan
+    - Restart ipsec
+    delegate_to: ipsec-client
+    delegate_facts: True
 
-- name: Run handlers
-  ansible.builtin.meta: flush_handlers
+  - name: Copy ipsec server secret key
+    template:
+      src: ipsec-secret-servers.j2
+      dest: /etc/ipsec.secrets
+      mode: '0644'
+    notify: 
+    - Restart strongswan
+    - Restart ipsec
+    delegate_to: ipsec-server
+    delegate_facts: True
 
-- name: Up clients
-  command: ipsec up ipsec-{{ item.key }}
-  delegate_to: ipsec-client  
-  loop: "{{ ipsec.client | dict2items }}"
+  - name: Run handlers
+    ansible.builtin.meta: flush_handlers
+
+  - name: Up clients
+    command: ipsec up ipsec-{{ item.key }}
+    delegate_to: ipsec-client  
+    loop: "{{ ipsec.client | dict2items }}"
