@@ -24,3 +24,8 @@ ipsec:
     Ubuntu20.04: "5.8.2-1ubuntu3.5"
     Ubuntu22.04: "5.9.5-2ubuntu2.2"
     Debian11: "5.9.1-1+deb11u4"
+  clean_postrouting: true
+  masquerade_nets:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"

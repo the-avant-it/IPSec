@@ -30,12 +30,13 @@
       name: iptables-persistent={{ ipsec.iptables_persistent_package_version }}
       state: present
 
-  - name: Clean nat POSTROUTING table 
+  - name: Clean nat POSTROUTING table
     ansible.builtin.iptables:
       table: nat
       chain: POSTROUTING
       flush: true
     changed_when: false
+    when: ipsec.clean_postrouting
 
   - name: Enable MASQUERADE
     ansible.builtin.iptables:
@@ -44,10 +45,7 @@
       jump: MASQUERADE
       chain: POSTROUTING
     changed_when: false
-    loop: 
-    - "10.0.0.0/8"
-    - "172.16.0.0/12"
-    - "192.168.0.0/16"
+    loop: {{ ipsec.masquerade_nets }}
 
   - name: Save iptables
     shell: iptables-save > /etc/iptables/rules.v4

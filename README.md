@@ -70,6 +70,12 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 # Changelog
 
+## 3.1.4
+
+- Add configurable cleaning up POSTROUTING table by variable  clean_postrouting
+- Add configurable enabling MASQUERADE for docker. Set CIDRs for MASQUERADING
+- Add configurable  ipsec.client[client].keyexchange, ipsec.client[client].keyingtries,  ipsec.client[client].esp for ipsec-client.conf.j2 and ipsec-server.conf.j2
+
 ## 3.1.3
 
 - Add support for ubuntu 22.04 and debian 11
@@ -147,6 +153,10 @@ ipsec:
       # Right means subnets the SERVER is located in
       rightsubnet: 172.22.84.0/23,172.22.86.0/23,172.22.88.0/23,172.22.90.0/23,172.22.92.0/23,172.22.94.0/23
       right: dev-gcp-ipsec-pub.hostname
+      # Optionals.
+      keyexchange=ikev2
+      keyingtries=3
+      esp=aes256-sha256-modp2048"
 
   # Server side configuration (google is the server in this example)
   server:
@@ -155,6 +165,10 @@ ipsec:
       leftsubnet: 172.22.84.0/23,172.22.86.0/23,172.22.88.0/23,172.22.90.0/23,172.22.92.0/23,172.22.94.0/23
       # Right means subnets the CLIENT is located in (see, server configuration is opposite to the client's one!)
       rightsubnet: 172.18.60.0/23,172.18.62.0/23,172.18.64.0/23,172.18.66.0/23,172.18.68.0/23,172.18.70.0/23
+      # Optionals.
+      keyexchange=ikev2
+      keyingtries=3
+      esp=aes256-sha256-modp2048"
 ```  
 
 ### Secret
