@@ -45,7 +45,7 @@
       jump: MASQUERADE
       chain: POSTROUTING
     changed_when: false
-    loop: {{ ipsec.masquerade_nets }}
+    loop: ["{{ ipsec.masquerade_nets }}"]
 
   - name: Save iptables
     shell: iptables-save > /etc/iptables/rules.v4
