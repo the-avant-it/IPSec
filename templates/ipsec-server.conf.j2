@@ -1,10 +1,10 @@
 {% for server in ipsec.server %}
 conn ipsec-{{ server }}
-        keyexchange="{{ ipsec.client[client].keyexchange | d("ikev2") }}"
+        keyexchange="{{ ipsec.server[server].keyexchange | d("ikev2") }}"
         type=tunnel
         authby=secret
         rekey=yes
-        keyingtries="{{ ipsec.client[client].keyingtries | d("3") }}"
+        keyingtries="{{ ipsec.server[server].keyingtries | d("3") }}"
         left=%any
         right=%any
         leftsubnet="{{ ipsec.server[server].leftsubnet }}"
@@ -13,5 +13,5 @@ conn ipsec-{{ server }}
         fragmentation=yes
         reauth=no
         dpdaction=clear
-        esp="{{ ipsec.client[client].esp | d("aes256-sha256-modp2048") }}"
+        esp="{{ ipsec.server[server].esp | d("aes256-sha256-modp2048") }}"
 {% endfor %}
