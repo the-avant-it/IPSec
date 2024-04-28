@@ -1,17 +1,17 @@
 {% for server in ipsec.server %}
 conn ipsec-{{ server }}
-        keyexchange="{{ ipsec.server[server].keyexchange | d("ikev2") }}"
-        type=tunnel
-        authby=secret
-        rekey=yes
-        keyingtries="{{ ipsec.server[server].keyingtries | d("3") }}"
-        left=%any
-        right=%any
+        keyexchange="{{ ipsec.server[server].keyexchange | d('ikev2') }}"
+        type="{{ ipsec.server[server].type | d('tunnel') }}"
+        authby="{{ ipsec.server[server].authby | d('secret') }}"
+        rekey="{{ ipsec.server[server].rekey | d('yes') }}"
+        keyingtries="{{ ipsec.server[server].keyingtries | d('3') }}"
+        left="{{ ipsec.server[server].left | d('%any') }}"
+        right="{{ ipsec.server[server].right | d('%any') }}"
         leftsubnet="{{ ipsec.server[server].leftsubnet }}"
         rightsubnet="{{ ipsec.server[server].rightsubnet }}"
-        auto=add
-        fragmentation=yes
-        reauth=no
-        dpdaction=clear
-        esp="{{ ipsec.server[server].esp | d("aes256-sha256-modp2048") }}"
+        auto="{{ ipsec.server[server].auto | d('add') }}"
+        fragmentation="{{ ipsec.server[server].fragmentation | d('yes') }}"
+        reauth="{{ ipsec.server[server].reauth | d('no') }}"
+        dpdaction="{{ ipsec.server[server].dpdaction | d('clear') }}"
+        esp="{{ ipsec.server[server].esp | d('aes256-sha256-modp2048') }}"
 {% endfor %}

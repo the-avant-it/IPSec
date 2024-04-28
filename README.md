@@ -155,8 +155,17 @@ ipsec:
       right: dev-gcp-ipsec-pub.hostname
       # Optionals.
       keyexchange=ikev2
+      type=tunnel
+      authby=secret
+      rekey=yes
       keyingtries=3
-      esp=aes256-sha256-modp2048"
+      left=%any
+      right=%any
+      auto=route
+      fragmentation=yes
+      reauth=no
+      dpdaction=clear
+      esp=aes256-sha256-modp2048
 
   # Server side configuration (google is the server in this example)
   server:
@@ -167,8 +176,17 @@ ipsec:
       rightsubnet: 172.18.60.0/23,172.18.62.0/23,172.18.64.0/23,172.18.66.0/23,172.18.68.0/23,172.18.70.0/23
       # Optionals.
       keyexchange=ikev2
+      type=tunnel
+      authby=secret
+      rekey=yes
       keyingtries=3
-      esp=aes256-sha256-modp2048"
+      left=%any
+      right=%any
+      auto=add
+      fragmentation=yes
+      reauth=no
+      dpdaction=clear
+      esp=aes256-sha256-modp2048
 ```  
 
 ### Secret
