@@ -10,8 +10,8 @@ conn ipsec-{{ client }}
         rightsubnet="{{ ipsec.client[client].rightsubnet }}"
         leftsubnet="{{ ipsec.client[client].leftsubnet }}"
         auto="{{ ipsec.client[client].auto | d('route') }}
-        fragmentation="{{ ipsec.server[server].fragmentation | d('yes') }}"
-        reauth="{{ ipsec.server[server].reauth | d('no') }}"
+        fragmentation="{{ ipsec.client[client].fragmentation | d('yes') }}"
+        reauth="{{ ipsec.client[client].reauth | d('no') }}"
         dpdaction="{{ ipsec.client[client].dpdaction | d('clear') }}"
         esp="{{ ipsec.client[client].esp | d('aes256-sha256-modp2048') }}"
 {% endfor %}
