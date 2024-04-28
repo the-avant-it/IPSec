@@ -5,8 +5,8 @@ conn ipsec-{{ server }}
         authby="{{ ipsec.server[server].authby | d('secret') }}"
         rekey="{{ ipsec.server[server].rekey | d('yes') }}"
         keyingtries="{{ ipsec.server[server].keyingtries | d('3') }}"
-        left="{{ ipsec.server[server].left | d('%any') }}"
-        right="{{ ipsec.server[server].right | d('%any') }}"
+        left=%any
+        right=%any
         leftsubnet="{{ ipsec.server[server].leftsubnet }}"
         rightsubnet="{{ ipsec.server[server].rightsubnet }}"
         auto="{{ ipsec.server[server].auto | d('add') }}"
