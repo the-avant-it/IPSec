@@ -9,4 +9,6 @@ conn ipsec-{{ client }}
         right="%any"
         rightsubnet="{{ ipsec.client[client].rightsubnet }}"
         leftsubnet="{{ ipsec.client[client].leftsubnet }}"
-{% endfor %}
+        auto="{{ ipsec.client[client].auto | d('route') }}"
+        fragmentation="{{ ipsec.client[client]. | d('yes') }}"
+ {% endfor %}
