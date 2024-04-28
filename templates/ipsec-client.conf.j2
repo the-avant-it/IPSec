@@ -7,4 +7,6 @@ conn ipsec-{{ client }}
         keyingtries="{{ ipsec.client[client].keyingtries | d('3') }}"
         left="%any"
         right="%any"
+        rightsubnet="{{ ipsec.client[client].rightsubnet }}"
+        leftsubnet="{{ ipsec.client[client].leftsubnet }}"
 {% endfor %}
