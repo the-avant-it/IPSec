@@ -2,6 +2,16 @@
 conn ipsec-{{ client }}
         keyexchange="{{ ipsec.client[client].keyexchange | d('ikev2') }}"
         type="{{ ipsec.client[client].type | d('tunnel') }}"
+        authby="{{ ipsec.client[client].authby | d('secret') }}"
+        rekey="{{ ipsec.client[client].rekey | d('yes') }}"
+        keyingtries="{{ ipsec.client[client].keyingtries | d('3') }}"
+        left="{{ ipsec.client[client].left | d('\%any') }}"
+        right="{{ ipsec.client[client].right | d('\%any') }}"
+        rightsubnet="{{ ipsec.client[client].rightsubnet }}"
         leftsubnet="{{ ipsec.client[client].leftsubnet }}"
+        auto="{{ ipsec.client[client].auto | d('route') }}"
+        fragmentation="{{ ipsec.client[client]. | d('yes') }}"
+        reauth="{{ ipsec.client[client].reauth | d('no') }}"
+        dpdaction="{{ ipsec.client[client].dpdaction | d('clear') }}"
         esp="{{ ipsec.client[client].esp | d('aes256-sha256-modp2048') }}"
 {% endfor %}
