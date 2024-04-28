@@ -5,4 +5,6 @@ conn ipsec-{{ client }}
         authby="{{ ipsec.client[client].authby | d('secret') }}"
         rekey="{{ ipsec.client[client].rekey | d('yes') }}"
         keyingtries="{{ ipsec.client[client].keyingtries | d('3') }}"
+        left="%any"
+        right="%any"
 {% endfor %}
