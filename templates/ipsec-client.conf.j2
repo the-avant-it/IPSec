@@ -1,4 +1,7 @@
 {% for client in ipsec.client %}
 conn ipsec-{{ client }}
-        keyexchange="dwedw"
+        keyexchange="{{ ipsec.client[client].keyexchange | d('ikev2') }}"
+        type="{{ ipsec.client[client].type | d('tunnel') }}"
+        leftsubnet="{{ ipsec.client[client].leftsubnet }}"
+        esp="{{ ipsec.client[client].esp | d('aes256-sha256-modp2048') }}"
 {% endfor %}
