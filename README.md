@@ -74,7 +74,7 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 - Add configurable cleaning up POSTROUTING table by variable  clean_postrouting
 - Add configurable enabling MASQUERADE for docker. Set CIDRs for MASQUERADING
-- Add configurable  ipsec.client[client].keyexchange, ipsec.client[client].keyingtries,  ipsec.client[client].esp for ipsec-client.conf.j2 and ipsec-server.conf.j2
+- Add parametrization all variables in ipsec-client.conf and ipsec-server.conf
 
 ## 3.1.3
 
