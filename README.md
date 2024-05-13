@@ -76,6 +76,17 @@ Server received your packet, but it did not recognize it as packet to be routed 
 - Add configurable enabling MASQUERADE for docker. Set CIDRs for MASQUERADING
 - Add parametrization all variables in ipsec-client.conf and ipsec-server.conf
 
+```yaml
+ipsec:
+  strongswan_package_version_os_defaults: 
+    Debian11: "5.9.1-1+deb11u4"
+  clean_postrouting: true
+  masquerade_nets:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+```  
+
 ## 3.1.3
 
 - Add support for ubuntu 22.04 and debian 11
