@@ -70,15 +70,16 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 # Changelog
 
-## 3.1.6
+## 3.1.7
 
 - Fix strongswan_package_version_os_defaults
+- Fix critical error in ipsec-client.conf.j2
 
-## 3.1.5
+## 3.1.5 (!BROKEN!)
 
 - Tag with unknown changes that Nikolay Novikov added
 
-## 3.1.4
+## 3.1.4 (!BROKEN!)
 
 - Add configurable cleaning up POSTROUTING table by variable  clean_postrouting
 - Add configurable enabling MASQUERADE for docker. Set CIDRs for MASQUERADING
