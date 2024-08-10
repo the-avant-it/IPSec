@@ -70,6 +70,10 @@ Server received your packet, but it did not recognize it as packet to be routed 
 
 # Changelog
 
+## 3.1.6
+
+- Fix strongswan_package_version_os_defaults
+
 ## 3.1.5
 
 - Tag with unknown changes that Nikolay Novikov added
