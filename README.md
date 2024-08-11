@@ -38,35 +38,46 @@ It's likely problem with you VPN because it allocates subnet in 10.8 range for c
 1) Run `ping` to the resource you want to reach through tunnel (it sould be on the side where ipsec server is located)
 2) Run `tcpdump icmp` in ipsec client
 
-2.1) If you see:
+2.1) If you see:<br/>
+```
 08:45:16.491925 IP prod-openvpn.ru-central1.internal > 172.31.101.65: ICMP echo request, id 49827, seq 1, length 64
 08:45:16.543008 IP 172.31.101.65 > prod-ipsec.ru-central1.internal: ICMP echo reply, id 49827, seq 1, length 64
-08:45:16.543075 IP 172.31.101.65 > prod-openvpn.ru-central1.internal: ICMP echo reply, id 49827, seq 1, length 64  
-That means everything is ok (ipsec client got packed, received response from destination, routed it back to the sender)
+08:45:16.543075 IP 172.31.101.65 > prod-openvpn.ru-central1.internal: ICMP echo reply, id 49827, seq 1, length 64
+```
+That means everything is ok (ipsec client got packed, received response from destination, routed it back to the sender)<br/>
 
-2.2) If you see:
+2.2) If you see:<br/>
+```
 08:45:31.186315 IP prod-openvpn.ru-central1.internal > 172.22.100.53: ICMP echo request, id 50134, seq 1, length 64
 08:45:31.186366 IP prod-ipsec.ru-central1.internal > 172.22.100.53: ICMP echo request, id 50134, seq 1, length 64
 08:45:31.186496 IP prod-ipsec.ru-central1.internal > 172.22.100.53: ICMP echo request, id 50134, seq 1, length 64
-Means that ipsec server didn't give route (ipsec client got packed, sent it further (not to the next ipsec), received it back since you configured routing table to route this ip to ipsec)
+```
+Means that ipsec server didn't give route (ipsec client got packed, sent it further (not to the next ipsec), received it back since you configured routing table to route this ip to ipsec)<br/>
 
-2.3) If you see:
+2.3) If you see:<br/>
+```
 09:53:06.966674 IP prod-openvpn.ru-central1.internal > 172.22.100.53: ICMP echo request, id 31214, seq 54, length 64
-Means that ipsec server didnt respond
+```
+Means that ipsec server didnt respond<br/>
 
-2.4) If you see nothing => you did not configured routes on the client side
+2.4) If you see nothing => you did not configured routes on the client side<br/>
 
-3) Run tcpdump icmp in ipsec server
+3) Run tcpdump icmp in ipsec server<br/>
 
-3.1) If you see:
+3.1) If you see:<br/>
+```
 10:06:53.971559 IP ip-172-18-0-100.eu-central-1.compute.internal > ip-172-22-100-53.eu-central-1.compute.internal: ICMP echo request, id 3, seq 18, length 64
 10:06:53.971622 IP ip-172-22-99-79.eu-central-1.compute.internal > ip-172-22-100-53.eu-central-1.compute.internal: ICMP echo request, id 3, seq 18, length 64
 10:06:53.971964 IP ip-172-22-100-53.eu-central-1.compute.internal > ip-172-22-99-79.eu-central-1.compute.internal: ICMP echo reply, id 3, seq 18, length 64
-Everything is ok (ipsec server got packet, retransmitted it from itself, received response from destination)
+```
+Everything is ok (ipsec server got packet, retransmitted it from itself, received response from destination)<br/>
 
-3.2) If you see:
+3.2) If you see:<br/>
+```
 10:07:51.697601 IP ip-172-20-0-100.eu-central-1.compute.internal > ip-172-22-100-53.eu-central-1.compute.internal: ICMP echo request, id 41466, seq 1, length 64
-Server received your packet, but it did not recognize it as packet to be routed and ignored it (likely because 172-22-100-53 and 172-20-0-100 do not belong to configured subnets)
+```
+Server received your packet, but it did not recognize it as packet to be routed and ignored it (likely because 172-22-100-53 and 172-20-0-100 do not belong to 
+configured subnets)<br/>
 
 # Changelog
 
