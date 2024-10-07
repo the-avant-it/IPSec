@@ -79,6 +79,8 @@ Everything is ok (ipsec server got packet, retransmitted it from itself, receive
 Server received your packet, but it did not recognize it as packet to be routed and ignored it (likely because 172-22-100-53 and 172-20-0-100 do not belong to 
 configured subnets)<br/>
 
+NOTE: As it turned out, one line instead if 3 is not always means problem. See: https://t.me/c/1605332835/18873
+
 # Changelog
 
 ## 3.1.7
