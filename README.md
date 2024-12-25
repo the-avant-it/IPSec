@@ -82,6 +82,15 @@ NOTE: As it turned out, one line instead if 3 is not always means problem. See: 
 
 # Changelog
 
+## 3.1.8
+- IMPORTANT. Exclude ipsec subnets range from masquerage section. Иest practices include only necessary networks in masquerade
+```yaml
+ipsec:
+  masquerade_nets:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+```  
 ## 3.1.7
 
 - Fix strongswan_package_version_os_defaults
