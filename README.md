@@ -82,7 +82,10 @@ NOTE: As it turned out, one line instead if 3 is not always means problem. See: 
 
 # Changelog
 
-## 3.1.8
+## 3.1.9
+  - By default leave only net 192.168.0.0/16 for masquerade.
+
+## 3.1.8 (!BROKEN!)
 - IMPORTANT. Exclude ipsec subnets range from masquerage section. Иest practices include only necessary networks in masquerade
 ```yaml
 ipsec:
